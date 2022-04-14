@@ -1,25 +1,22 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
-
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+      - image: cimg/ruby:3.1.2
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "4a:1b:2f:28:9f:78:86:c5:b5:ca:fa:b4:80:65:16:f0"
       - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
-
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+      - run: |
+          bundle install
+          bundle exec ruby ./get_steps.rb
+          git config user.email $GIT_CONFIG_EMAIL
+          git config user.name $GIT_CONFIG_USERNAME
+          git config --global push.default current
+          git add refresh
+          git commit -m "update refresh token [skip ci]"
+          git push --set-upstream origin
 workflows:
   say-hello-workflow:
     jobs:
