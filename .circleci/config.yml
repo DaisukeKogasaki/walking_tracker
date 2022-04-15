@@ -19,5 +19,12 @@ jobs:
           git push --set-upstream origin
 workflows:
   walking-tracker-workflow:
+    triggers:
+      - schedule:
+          cron: "0 23 * * *"
+          filters:
+            branches:
+              only:
+                - main
     jobs:
       - walking-tracker
