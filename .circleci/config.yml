@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  say-hello:
+  walking-tracker:
     docker:
       - image: cimg/ruby:3.1.2
     steps:
@@ -18,6 +18,6 @@ jobs:
           git commit -m "update refresh token [skip ci]"
           git push --set-upstream origin
 workflows:
-  say-hello-workflow:
+  walking-tracker-workflow:
     jobs:
-      - say-hello
+      - walking-tracker
