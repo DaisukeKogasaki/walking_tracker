@@ -1,0 +1,23 @@
+version: 2.1
+jobs:
+  walking-tracker:
+    docker:
+      - image: cimg/ruby:3.1.2
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "4a:1b:2f:28:9f:78:86:c5:b5:ca:fa:b4:80:65:16:f0"
+      - checkout
+      - run: |
+          bundle install
+          bundle exec ruby ./get_steps.rb
+          git config user.email $GIT_CONFIG_EMAIL
+          git config user.name $GIT_CONFIG_USERNAME
+          git config --global push.default current
+          git add refresh
+          git commit -m "update refresh token [skip ci]"
+          git push --set-upstream origin
+workflows:
+  walking-tracker-workflow:
+    jobs:
+      - walking-tracker
