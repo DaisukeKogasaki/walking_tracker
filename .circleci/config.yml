@@ -6,7 +6,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "4a:1b:2f:28:9f:78:86:c5:b5:ca:fa:b4:80:65:16:f0"
+            - $CI_FINGERPRINT
       - checkout
       - run: |
           bundle install
