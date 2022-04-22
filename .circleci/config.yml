@@ -21,7 +21,7 @@ workflows:
   walking-tracker-workflow:
     triggers:
       - schedule:
-          cron: "0 23 * * *"
+          cron: "0 16 * * *"
           filters:
             branches:
               only:
