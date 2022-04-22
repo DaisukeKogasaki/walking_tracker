@@ -17,8 +17,15 @@ jobs:
           git add refresh
           git commit -m "update refresh token [skip ci]"
           git push --set-upstream origin
+
+parameters:
+  run-schedule:
+    type: boolean
+    default: false
+
 workflows:
   walking-tracker-workflow:
+    when: << pipeline.parameters.run-schedule >>
     triggers:
       - schedule:
           cron: "0 16 * * *"
